@@ -12,10 +12,11 @@ private:
     ~Application();
     static Application* instance;
     bool running;
-
+    bool simulating;
     SDL_Window *window;
     int width, height;
     int simulationWidth, simulationHeight;
+    uint64_t simulationSpeed;
 
     BGRA* pixels;
 
@@ -33,7 +34,7 @@ public:
     static Application* GetInstance();
     static void DestroyInstance();
 
-    void Init(int width, int height, std::string title, int simulationWidth, int simulationHeight);
+    void Init(int width, int height, std::string title, int simulationWidth, int simulationHeight, uint64_t simulationSpeed);
     void Run();
     void SetPixel(int x, int y, BGRA color);
 

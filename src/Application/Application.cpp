@@ -28,12 +28,13 @@ void Application::DestroyInstance()
     }
 }
 
-void Application::Init(int width, int height, std::string title,int simulationWidth,int simulationHeight)
+void Application::Init(int width, int height, std::string title,int simulationWidth,int simulationHeight, uint64_t simulationSpeed)
 {
     this->width = width;
     this->height = height;
     this->simulationWidth = simulationWidth;
     this->simulationHeight = simulationHeight;
+    this->simulationSpeed = simulationSpeed;
     
     if (SDL_Init(SDL_INIT_VIDEO))
     {
@@ -113,27 +114,51 @@ void Application::Render()
 void Application::Run()
 {
     this->running = true;
+    this->simulating = false;
 
     Board* board = new Board(this->simulationWidth, this->simulationHeight);
     board->AddElement(1,new Element("Sand",1,BGRA{255,0,0,255}));
+    board->AddElement(2,new Element("Wall",2,BGRA{0,0,255,255}));
     
-    std::vector<std::vector<ElementID>> sandRuleInput= {
-        {1},{0}
+    std::vector<std::vector<ElementID>> sandFallRuleInput= {
+        {1},
+        {0}
     };
-    std::vector<std::vector<ElementID>> sandRuleOutput= {
-        {0},{1}
+    std::vector<std::vector<ElementID>> sandFallRuleOutput= {
+        {0},
+        {1}
     };
-    board->GetElement(1)->AddRule(Rule(sandRuleInput,sandRuleOutput));
+    
+    board->GetElement(1)->AddRule(Rule(sandFallRuleInput,sandFallRuleOutput));
+
     board->SetAtom(25,0,1);
+    board->SetAtom(25,2,1);
+    board->SetAtom(25,4,1);
+
+    board->SetAtom(25,49,2);
+
+    board->DrawPixels(this->pixels);
     
+    uint64_t NOW = SDL_GetPerformanceCounter();
+    uint64_t LAST = 0;
+    double elapsed = 0;
+
     while (this->running)
     {
-        this->ProcessEvents();
-        board->Update();
-        board->DrawPixels(this->pixels);
-        usleep(100000);
+        LAST = NOW;
+        NOW = SDL_GetPerformanceCounter();
+        elapsed += (NOW - LAST) / (double)SDL_GetPerformanceFrequency();
+        if (elapsed > (1/(double)this->simulationSpeed) && this->simulating)
+        {
+            
+            board->Update();
+            board->DrawPixels(this->pixels);
+            elapsed = 0;
+        }
         this->Render();
+        ProcessEvents();
     }
+
     delete board;
     this->CleanUp();
 }
@@ -153,6 +178,9 @@ void Application::ProcessEvents()
             {
             case SDLK_ESCAPE:
                 this->running = false;
+                break;
+            case SDLK_SPACE:
+                this->simulating = !this->simulating;
                 break;
             }
             break;
