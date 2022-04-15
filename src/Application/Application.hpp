@@ -2,15 +2,8 @@
 #include <SDL2/SDL.h>
 #include <string>
 #include <iostream>
+#include "../Simulation/Board.hpp"
 
-
-struct RGB
-{
-    u_char b;
-    u_char g;
-    u_char r;
-    u_char a;
-};
 
 class Application
 {
@@ -24,7 +17,7 @@ private:
     int width, height;
     int simulationWidth, simulationHeight;
 
-    RGB* pixels;
+    BGRA* pixels;
 
 
     SDL_Renderer *renderer;
@@ -42,6 +35,7 @@ public:
 
     void Init(int width, int height, std::string title, int simulationWidth, int simulationHeight);
     void Run();
+    void SetPixel(int x, int y, BGRA color);
 
 
 };

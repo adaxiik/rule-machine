@@ -20,9 +20,9 @@ find_package(SDL2)
 
 
 
-include_directories(${SDL2_INCLUDE_DIRS})
+include_directories(${SDL2_INCLUDE_DIRS} "src/")
 
-file(GLOB SOURCES "src/Application/*.cpp")
+file(GLOB SOURCES "src/Application/*.cpp" "src/Simulation/*")
 add_executable(rule-machine src/main.cpp ${SOURCES})
 #target_include_directories(rule-machine PRIVATE /include)
 

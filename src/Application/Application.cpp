@@ -1,5 +1,5 @@
 #include "Application.hpp"
-
+#include <unistd.h>
 Application *Application::instance = nullptr;
 Application::Application()
 {
@@ -64,10 +64,7 @@ void Application::Init(int width, int height, std::string title,int simulationWi
         goto sdl_create_texture_error;
     }
 
-
-
-
-    this->pixels = new RGB[simulationWidth * simulationHeight];
+    this->pixels = new BGRA[simulationWidth * simulationHeight];
     for (int i = 0; i < simulationWidth * simulationHeight; i++)
     {
         this->pixels[i].r = 0;
@@ -105,7 +102,8 @@ void Application::CleanUp()
 
 void Application::Render()
 {
-    SDL_UpdateTexture(this->texture, NULL, this->pixels, this->simulationWidth * sizeof(RGB));
+
+    SDL_UpdateTexture(this->texture, NULL, this->pixels, this->simulationWidth * sizeof(BGRA));
     SDL_RenderCopy(this->renderer, this->texture, NULL, NULL);
 
     SDL_RenderPresent(this->renderer);
@@ -115,12 +113,28 @@ void Application::Render()
 void Application::Run()
 {
     this->running = true;
+
+    Board* board = new Board(this->simulationWidth, this->simulationHeight);
+    board->AddElement(1,new Element("Sand",1,BGRA{255,0,0,255}));
+    
+    std::vector<std::vector<ElementID>> sandRuleInput= {
+        {1},{0}
+    };
+    std::vector<std::vector<ElementID>> sandRuleOutput= {
+        {0},{1}
+    };
+    board->GetElement(1)->AddRule(Rule(sandRuleInput,sandRuleOutput));
+    board->SetAtom(25,0,1);
+    
     while (this->running)
     {
         this->ProcessEvents();
+        board->Update();
+        board->DrawPixels(this->pixels);
+        usleep(100000);
         this->Render();
     }
-
+    delete board;
     this->CleanUp();
 }
 
@@ -144,4 +158,9 @@ void Application::ProcessEvents()
             break;
         }
     }
+}
+
+void Application::SetPixel(int x, int y, BGRA color)
+{
+    this->pixels[y * this->simulationWidth + x] = color;
 }
