@@ -3,11 +3,13 @@
 #include <string>
 #include <iostream>
 
+
 struct RGB
 {
-    u_char r;
-    u_char g;
     u_char b;
+    u_char g;
+    u_char r;
+    u_char a;
 };
 
 class Application
@@ -16,6 +18,7 @@ private:
     Application();
     ~Application();
     static Application* instance;
+    bool running;
 
     SDL_Window *window;
     int width, height;
@@ -28,6 +31,9 @@ private:
     SDL_Texture *texture;
 
     void CleanUp();
+    void Render();
+    void ProcessEvents();
+
 
 
 public:
@@ -35,6 +41,8 @@ public:
     static void DestroyInstance();
 
     void Init(int width, int height, std::string title, int simulationWidth, int simulationHeight);
+    void Run();
+
 
 };
 

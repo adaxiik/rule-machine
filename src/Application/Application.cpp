@@ -54,25 +54,29 @@ void Application::Init(int width, int height, std::string title,int simulationWi
         std::cout << "SDL_CreateRenderer Error: " << SDL_GetError() << std::endl;
         goto sdl_create_renderer_error;
     }
+    SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, 0);
+    SDL_RenderSetLogicalSize(this->renderer, simulationWidth, simulationHeight);
 
-    this->texture = SDL_CreateTexture(this->renderer, SDL_PIXELFORMAT_RGB888, SDL_TEXTUREACCESS_STREAMING, simulationWidth, simulationHeight);
+    this->texture = SDL_CreateTexture(this->renderer, SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_STREAMING, simulationWidth, simulationHeight);
     if (!this->texture)
     {
         std::cout << "SDL_CreateTexture Error: " << SDL_GetError() << std::endl;
         goto sdl_create_texture_error;
     }
 
-    SDL_RenderSetLogicalSize(this->renderer, simulationWidth, simulationHeight);
-    SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, 0);
+
 
 
     this->pixels = new RGB[simulationWidth * simulationHeight];
-    for(size_t i = 0; i < (size_t)simulationWidth * simulationHeight; i++)
+    for (int i = 0; i < simulationWidth * simulationHeight; i++)
     {
         this->pixels[i].r = 0;
         this->pixels[i].g = 0;
         this->pixels[i].b = 0;
+        this->pixels[i].a = 255;
     }
+    
+    
 
     return;
 
@@ -89,13 +93,55 @@ void Application::Init(int width, int height, std::string title,int simulationWi
         exit(EXIT_FAILURE);
 }
 
-
 void Application::CleanUp()
 {
     SDL_DestroyTexture(this->texture);
     SDL_DestroyRenderer(this->renderer);
     SDL_DestroyWindow(this->window);
-    //SDL_VideoQuit();
+    SDL_VideoQuit();
 
     SDL_Quit();
+}
+
+void Application::Render()
+{
+    SDL_UpdateTexture(this->texture, NULL, this->pixels, this->simulationWidth * sizeof(RGB));
+    SDL_RenderCopy(this->renderer, this->texture, NULL, NULL);
+
+    SDL_RenderPresent(this->renderer);
+    SDL_RenderClear(this->renderer);
+}
+
+void Application::Run()
+{
+    this->running = true;
+    while (this->running)
+    {
+        this->ProcessEvents();
+        this->Render();
+    }
+
+    this->CleanUp();
+}
+
+void Application::ProcessEvents()
+{
+    SDL_Event event;
+    while (SDL_PollEvent(&event))
+    {
+        switch (event.type)
+        {
+        case SDL_QUIT:
+            this->running = false;
+            break;
+        case SDL_KEYDOWN:
+            switch (event.key.keysym.sym)
+            {
+            case SDLK_ESCAPE:
+                this->running = false;
+                break;
+            }
+            break;
+        }
+    }
 }
