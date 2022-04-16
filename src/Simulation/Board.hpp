@@ -13,13 +13,18 @@ typedef size_t ElementID;
 class Element;
 struct BGRA;
 
+struct Atom
+{
+    ElementID id;
+    bool updated;
+};
 
 class Board
 {
 private:
     size_t width, height;
-    ElementID* board;
-    ElementID* state;
+    Atom* board;
+    Atom* state;
 
     std::unordered_map<ElementID, Element*> elements;
     std::vector<Rule> globalRules;
@@ -31,8 +36,9 @@ public:
     void AddElement(ElementID id, Element* element);
     void AddGlobalRule(Rule rule);
 
-    ElementID GetAtom(size_t x, size_t y) const;
+    Atom GetAtom(size_t x, size_t y) const;
     void SetAtom(size_t x, size_t y, ElementID element);
+    void SetAtom(size_t x, size_t y, ElementID element, bool update);
     
     Element* GetElement(ElementID id);
 

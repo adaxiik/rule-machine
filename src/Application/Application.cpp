@@ -233,11 +233,10 @@ void Application::Run()
     // board->AddGlobalRule(Rule(rule7_i,rule7_o,1));
     // //board->AddGlobalRule(Rule(rule8_i,rule8_o,1));
 
-    this->board->SetAtom(49,1,1);
-
     for (size_t i = 0; i < 80; i++)
     {
         this->board->SetAtom(i,59,2);
+        this->board->SetAtom(i,40,2);
     }
     
     this->board->Update();
@@ -254,7 +253,6 @@ void Application::Run()
         elapsed += (NOW - LAST) / (double)SDL_GetPerformanceFrequency();
         if (elapsed > (1/(double)this->simulationSpeed) && this->simulating)
         {
-            this->board->SetAtom(50,1,1);
             this->board->Update();
             this->DrawPixels();
             elapsed = 0;
@@ -291,6 +289,22 @@ void Application::ProcessEvents()
             break;
         }
     }
+
+    SDL_PumpEvents();
+    int x, y;
+    uint32_t mouseState = SDL_GetMouseState(&x, &y);
+
+    x = x * this->simulationWidth / this->width;
+    y = y * this->simulationHeight / this->height;
+    if (mouseState & SDL_BUTTON(SDL_BUTTON_LEFT))
+    {
+        this->board->SetAtom(x,y,1,false);
+    }
+    else if (mouseState & SDL_BUTTON(SDL_BUTTON_RIGHT))
+    {
+        this->board->SetAtom(x,y,0,false);
+    }
+
 }
 
 void Application::SetPixel(int x, int y, BGRA color)
@@ -304,7 +318,7 @@ void Application::DrawPixels()
     {
         for (int x = 0; x < this->simulationWidth; x++)
         {
-            this->pixels[y * this->simulationWidth + x] = this->board->GetElement(this->board->GetAtom(x,y))->GetColor();
+            this->pixels[y * this->simulationWidth + x] = this->board->GetElement(this->board->GetAtom(x,y).id)->GetColor();
         }
     }
 }
