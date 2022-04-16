@@ -19,6 +19,7 @@ private:
     uint64_t simulationSpeed;
 
     BGRA* pixels;
+    Board* board;
 
 
     SDL_Renderer *renderer;
@@ -26,6 +27,7 @@ private:
 
     void CleanUp();
     void Render();
+    void DrawPixels();
     void ProcessEvents();
 
 

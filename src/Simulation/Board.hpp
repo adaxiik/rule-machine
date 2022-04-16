@@ -8,32 +8,34 @@ typedef size_t ElementID;
 #include "Element.hpp"
 #include "Rule.hpp"
 
-struct Atom
-{
-    ElementID id;
-    bool simulated;
-};
+
+
 class Element;
 struct BGRA;
+
 
 class Board
 {
 private:
     size_t width, height;
-    Atom* board;
+    ElementID* board;
+    ElementID* state;
+
     std::map<ElementID, Element*> elements;
+    std::vector<Rule> globalRules;
+    void Synchronize();
 public:
     Board(size_t width, size_t height);
+    ~Board();
 
     void AddElement(ElementID id, Element* element);
+    void AddGlobalRule(Rule rule);
 
-
-    Atom GetAtom(size_t x, size_t y) const;
+    ElementID GetAtom(size_t x, size_t y) const;
     void SetAtom(size_t x, size_t y, ElementID element);
     
     Element* GetElement(ElementID id);
 
-    void DrawPixels(BGRA* pixels);
+    BGRA GetPixelColorAt(size_t x, size_t y);
     void Update();
-    ~Board();
 };
