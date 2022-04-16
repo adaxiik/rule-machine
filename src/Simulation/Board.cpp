@@ -24,7 +24,7 @@ void Board::Update()
             ElementID atom = this->GetAtom(x, y);
             this->GetElement(atom)->ApplyRules(this, x, y);          
             
-            for (auto rule : this->globalRules)
+            for (auto &rule : this->globalRules)
                 rule.ApplyGlobalRule(this, x, y);
         }
     }
