@@ -2,7 +2,7 @@
 #include <vector>
 #include <string>
 #include <iostream>
-#include <map>
+#include <unordered_map>
 
 typedef size_t ElementID;
 #include "Element.hpp"
@@ -21,7 +21,7 @@ private:
     ElementID* board;
     ElementID* state;
 
-    std::map<ElementID, Element*> elements;
+    std::unordered_map<ElementID, Element*> elements;
     std::vector<Rule> globalRules;
     void Synchronize();
 public:

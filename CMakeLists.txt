@@ -2,8 +2,8 @@ cmake_minimum_required(VERSION 3.0.0)
 project(rule-machine VERSION 1.0)
 
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ")
-set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -Wall -flto -ftree-vectorize -march=native -O3 -mtune=generic")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fopenmp -std=c++11")
+set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -Wall -flto -ftree-vectorize -march=native -Ofast -mtune=generic")
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g -Wall -Wextra -fsanitize=address")
 
 

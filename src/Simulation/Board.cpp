@@ -16,19 +16,18 @@ Board::Board(size_t width, size_t height)
 
 void Board::Update()
 {
-
-    for (int64_t y = this->height - 1; y >= 0; y--)
+    this->Synchronize();
+    //#pragma omp parallel for
+    for (size_t y = 0; y < this->width; y++)
     {
         for (size_t x = 0; x < this->width; x++)
         {
-            ElementID atom = this->GetAtom(x, y);
-            this->GetElement(atom)->ApplyRules(this, x, y);          
+            this->GetElement(this->GetAtom(x, y))->ApplyRules(this, x, y);          
             
             for (auto &rule : this->globalRules)
                 rule.ApplyGlobalRule(this, x, y);
         }
     }
-    this->Synchronize();
     
 }
 void Board::AddGlobalRule(Rule rule)
