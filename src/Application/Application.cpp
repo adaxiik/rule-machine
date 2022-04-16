@@ -120,124 +120,124 @@ void Application::Run()
     this->board->AddElement(1,new Element("Sand",1,BGRA{255,255,255,255}));
     this->board->AddElement(2,new Element("Wall",2,BGRA{0,0,255,255}));
     
-    std::vector<std::vector<ElementID>> sandFallRuleInput= {
-        {1},
-        {0}
-    };
-    std::vector<std::vector<ElementID>> sandFallRuleOutput= {
-        {0},
-        {1}
-    };
+    // std::vector<std::vector<ElementID>> sandFallRuleInput= {
+    //     {1},
+    //     {0}
+    // };
+    // std::vector<std::vector<ElementID>> sandFallRuleOutput= {
+    //     {0},
+    //     {1}
+    // };
 
     std::vector<std::vector<ElementID>> sandFallSide1RuleInput= {
-        {1},
+        {1,0},
         {1,0}
     };
     std::vector<std::vector<ElementID>> sandFallSide1RuleOutput= {
-        {0},
-        {1,1}
-    };
-
-    std::vector<std::vector<ElementID>> sandFallSide2RuleInput= {
-        {0,1},
-        {0,1}
-    };
-    std::vector<std::vector<ElementID>> sandFallSide2RuleOutput= {
         {0,0},
         {1,1}
     };
+
+    // std::vector<std::vector<ElementID>> sandFallSide2RuleInput= {
+    //     {0,1},
+    //     {0,1}
+    // };
+    // std::vector<std::vector<ElementID>> sandFallSide2RuleOutput= {
+    //     {0,0},
+    //     {1,1}
+    // };
     
-    board->GetElement(1)->AddRule(Rule(sandFallRuleInput,sandFallRuleOutput,1));
-    board->GetElement(1)->AddRule(Rule(sandFallSide1RuleInput,sandFallSide1RuleOutput,1));
-    board->GetElement(1)->AddRule(Rule(sandFallSide2RuleInput,sandFallSide2RuleOutput,1));
+    // board->GetElement(1)->AddRule(Rule(sandFallRuleInput,sandFallRuleOutput,1));
+    // board->GetElement(1)->AddRule(Rule(sandFallSide1RuleInput,sandFallSide1RuleOutput,1));
+    // board->GetElement(1)->AddRule(Rule(sandFallSide2RuleInput,sandFallSide2RuleOutput,1));
 
     //rule 110
-    // std::vector<std::vector<ElementID>> rule1_i= {
-    //     {1,1,1},
-    //     {0,0,0}
-    // };
-    // std::vector<std::vector<ElementID>> rule1_o= {
-    //     {1,1,1},
-    //     {0,0,0}
-    // };
+    std::vector<std::vector<ElementID>> rule1_i= {
+        {1,1,1},
+        {0,0,0}
+    };
+    std::vector<std::vector<ElementID>> rule1_o= {
+        {1,1,1},
+        {0,0,0}
+    };
 
-    // std::vector<std::vector<ElementID>> rule2_i= {
-    //     {1,1,0},
-    //     {0,0,0}
-    // };
-    // std::vector<std::vector<ElementID>> rule2_o= {
-    //     {1,1,0},
-    //     {0,1,0}
-    // };
+    std::vector<std::vector<ElementID>> rule2_i= {
+        {1,1,0},
+        {0,0,0}
+    };
+    std::vector<std::vector<ElementID>> rule2_o= {
+        {1,1,0},
+        {0,1,0}
+    };
 
-    // std::vector<std::vector<ElementID>> rule3_i= {
-    //     {1,0,1},
-    //     {0,0,0}
-    // };
-    // std::vector<std::vector<ElementID>> rule3_o= {
-    //     {1,0,1},
-    //     {0,1,0}
-    // };
+    std::vector<std::vector<ElementID>> rule3_i= {
+        {1,0,1},
+        {0,0,0}
+    };
+    std::vector<std::vector<ElementID>> rule3_o= {
+        {1,0,1},
+        {0,1,0}
+    };
 
-    // std::vector<std::vector<ElementID>> rule4_i= {
-    //     {1,0,0},
-    //     {0,0,0}
-    // };
-    // std::vector<std::vector<ElementID>> rule4_o= {
-    //     {1,0,0},
-    //     {0,0,0}
-    // };
+    std::vector<std::vector<ElementID>> rule4_i= {
+        {1,0,0},
+        {0,0,0}
+    };
+    std::vector<std::vector<ElementID>> rule4_o= {
+        {1,0,0},
+        {0,0,0}
+    };
 
-    // std::vector<std::vector<ElementID>> rule5_i= {
-    //     {0,1,1},
-    //     {0,0,0}
-    // };
-    // std::vector<std::vector<ElementID>> rule5_o= {
-    //     {0,1,1},
-    //     {0,1,0}
-    // };
+    std::vector<std::vector<ElementID>> rule5_i= {
+        {0,1,1},
+        {0,0,0}
+    };
+    std::vector<std::vector<ElementID>> rule5_o= {
+        {0,1,1},
+        {0,1,0}
+    };
 
-    // std::vector<std::vector<ElementID>> rule6_i= {
-    //     {0,1,0},
-    //     {0,0,0}
-    // };
-    // std::vector<std::vector<ElementID>> rule6_o= {
-    //     {0,1,0},
-    //     {0,1,0}
-    // };
+    std::vector<std::vector<ElementID>> rule6_i= {
+        {0,1,0},
+        {0,0,0}
+    };
+    std::vector<std::vector<ElementID>> rule6_o= {
+        {0,1,0},
+        {0,1,0}
+    };
 
-    // std::vector<std::vector<ElementID>> rule7_i= {
-    //     {0,0,1},
-    //     {0,0,0}
-    // };
-    // std::vector<std::vector<ElementID>> rule7_o= {
-    //     {0,0,1},
-    //     {0,1,0}
-    // };
+    std::vector<std::vector<ElementID>> rule7_i= {
+        {0,0,1},
+        {0,0,0}
+    };
+    std::vector<std::vector<ElementID>> rule7_o= {
+        {0,0,1},
+        {0,1,0}
+    };
 
-    // std::vector<std::vector<ElementID>> rule8_i= {
-    //     {0,0,0},
-    //     {0,0,0}
-    // };
-    // std::vector<std::vector<ElementID>> rule8_o= {
-    //     {0,0,0},
-    //     {0,0,0}
-    // };
+    std::vector<std::vector<ElementID>> rule8_i= {
+        {0,0,0},
+        {0,0,0}
+    };
+    std::vector<std::vector<ElementID>> rule8_o= {
+        {0,0,0},
+        {0,0,0}
+    };
 
-    // //board->AddGlobalRule(Rule(rule1_i,rule1_o,1));
-    // board->AddGlobalRule(Rule(rule2_i,rule2_o,1));
-    // board->AddGlobalRule(Rule(rule3_i,rule3_o,1));
-    // //board->AddGlobalRule(Rule(rule4_i,rule4_o,1));
-    // board->AddGlobalRule(Rule(rule5_i,rule5_o,1));
-    // board->AddGlobalRule(Rule(rule6_i,rule6_o,1));
-    // board->AddGlobalRule(Rule(rule7_i,rule7_o,1));
-    // //board->AddGlobalRule(Rule(rule8_i,rule8_o,1));
+    //board->AddGlobalRule(Rule(rule1_i,rule1_o,1));
+    board->AddGlobalRule(Rule(rule2_i,rule2_o,1));
+    board->AddGlobalRule(Rule(rule3_i,rule3_o,1));
+    //board->AddGlobalRule(Rule(rule4_i,rule4_o,1));
+    board->AddGlobalRule(Rule(rule5_i,rule5_o,1));
+    board->AddGlobalRule(Rule(rule6_i,rule6_o,1));
+    board->AddGlobalRule(Rule(rule7_i,rule7_o,1));
+    //board->AddGlobalRule(Rule(rule8_i,rule8_o,1));
 
-    for (size_t i = 0; i < 80; i++)
-    {
-        this->board->SetAtom(i,59,2);
-        this->board->SetAtom(i,40,2);
-    }
+    // for (size_t i = 0; i < 80; i++)
+    // {
+    //     this->board->SetAtom(i,59,2);
+    //     this->board->SetAtom(i,40,2);
+    // }
     
     this->board->Update();
     this->DrawPixels();
